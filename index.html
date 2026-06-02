@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KDP出版代行｜素材を渡すだけで、本が世界に出る</title>
+<meta name="description" content="元大手出版社編集者がInDesign制作・epub変換・KDP登録まで全工程を代行。知識もソフトも不要です。">
+<style>
+  /* ===== リセット・基盤 ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'YuMincho', Georgia, serif;
+    font-size: 16px;
+    line-height: 1.8;
+    color: #2D2D2D;
+    background: #fff;
+    padding-bottom: 80px; /* 固定CTAの高さ分 */
+  }
+
+  /* ===== カラー変数 ===== */
+  :root {
+    --navy:  #1E2761;
+    --gold:  #C8A96E;
+    --gold-light: #e8d4a8;
+    --white: #ffffff;
+    --off-white: #F8F7F4;
+    --text:  #2D2D2D;
+    --text-light: #666;
+    --border: #e0ddd6;
+  }
+
+  /* ===== タイポグラフィ ===== */
+  h1, h2, h3 {
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'YuMincho', Georgia, serif;
+    line-height: 1.4;
+    letter-spacing: 0.03em;
+  }
+  p { margin-bottom: 1em; }
+  p:last-child { margin-bottom: 0; }
+
+  /* ===== レイアウト ===== */
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  section { padding: 72px 0; }
+  section:nth-child(even) { background: var(--off-white); }
+
+  /* ===== CTAボタン（共通） ===== */
+  .btn {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--white);
+    font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 16px 32px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.1s;
+    text-align: center;
+  }
+  .btn:hover { background: #b8935a; transform: translateY(-1px); }
+  .btn:active { transform: translateY(0); }
+  .btn-full { display: block; width: 100%; }
+
+  /* ===== 固定CTAバー ===== */
+  .fixed-cta {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: var(--navy);
+    padding: 12px 24px;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    box-shadow: 0 -2px 12px rgba(0,0,0,0.15);
+  }
+  .fixed-cta p {
+    color: var(--white);
+    font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+    font-size: 0.85rem;
+    margin: 0;
+    white-space: nowrap;
+  }
+  .fixed-cta .btn {
+    font-size: 0.9rem;
+    padding: 12px 24px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  @media (max-width: 480px) {
+    .fixed-cta { flex-direction: column; gap: 8px; padding: 10px 16px; }
+    .fixed-cta p { font-size: 0.78rem; white-space: normal; text-align: center; }
+    .fixed-cta .btn { font-size: 0.9rem; padding: 11px 20px; width: 100%; }
+  }
+
+  /* ===== ヘッダー ===== */
+  header {
+    background: var(--navy);
+    padding: 14px 24px;
+    position: sticky; top: 0; z-index: 90;
+  }
+  header .inner {
+    max-width: 720px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .site-title {
+    color: var(--white);
+    font-size: 0.95rem;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+  }
+  .header-btn {
+    font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+    font-size: 0.78rem;
+    padding: 8px 16px;
+    background: var(--gold);
+    color: var(--white);
+    border-radius: 3px;
+    text-decoration: none;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    transition: background 0.2s;
+  }
+  .header-btn:hover { background: #b8935a; }
+
+  /* ===== S1 ヒーロー ===== */
+  #hero {
+    background: var(--navy);
+    padding: 80px 0 72px;
+    text-align: center;
+  }
+  #hero .container { display: flex; flex-direction: column; align-items: center; gap: 28px; }
+  .hero-eyebrow {
+    font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+  .hero-h1 {
+    font-size: clamp(1.7rem, 5vw, 2.4rem);
+    color: var(--white);
+    font-weight: 700;
+    line-height: 1.5;
+  }
+  .hero-h1 em {
+    font-style: normal;
+    color: var(--gold);
+  }
+  .hero-sub {
+    color: rgba(255,255,255,0.85);
+    font-size: clamp(0.95rem, 2.5vw, 1.05rem);
+    line-height: 1.9;
+    max-width: 500px;
+  }
+  .hero-lead {
+    color: rgba(255,255,255,0.7);
+    font-size: 0.9rem;
+    line-height: 1.8;
+    max-width: 480px;
+  }
+  .hero-note {
+    font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.5);
+    margin-top: -12px;
+  }
+
+  /* ===== S2 アジテーション ===== */
+  #agitation .section-title { margin-bottom: 40px; }
+  .wall-list { display: flex; flex-direction: column; gap: 24px; margin-bottom: 40px; }
+  .wall-item {
+    background: var(--white);
+    border-left: 4px solid var(--gold);
+    padding: 20px 24px;
+    border-radius: 0 4px 4px 0;
+  }
+  .wall-label {
+    font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+  .wall-item p { font-size: 0.95rem; color: var(--text); margin: 0; line-height: 1.75; }
+  .agitation-close {
+    background: var(--navy);
+    color: var(--white);
+    padding: 24px 28px;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    line-height: 1.85;
+  }
+  .agitation-close strong { color: var(--gold); }
+
+  /* ===== S3 ソリューション ===== */
+  #solution .section-title { margin-bottom: 40px; }
+  .flow-list { display: flex; flex-direction: column; gap: 0; margin-bottom: 48px; }
+  .flow-item {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    position: relative;
+    padding-bottom: 28px;
+  }
+  .flow-item:last-child { padding-bottom: 0; }
+  .flow-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 19px; top: 40px;
+    width: 2px;
+    bottom: 0;
+    background: var(--gold-light);
+  }
+  .flow-num {
+    width: 40px; height: 40px;
+    background: var(--navy);
+    color: var(--white);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: Georgia, serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    position: relative; z-index: 1;
+  }
+  .flow-body { padding-top: 8px; }
+  .flow-body strong {
+    display: block;
+    font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+  .flow-body p { font-size: 0.88rem; color: var(--text-light); margin: 0; line-height: 1.7; }
+  .flow-note { font-size: 0.8rem; color: var(--gold); margin-top: 2px; }
+
+  /* 料金プラン */
+  .plan-title {
+    font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--text-light);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .plan-grid { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+  .plan-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .plan-card.featured {
+    border-color: var(--gold);
+    border-width: 2px;
+    background: #fffdf8;
+  }
+  .plan-name {
+    font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+  .plan-desc { font-size: 0.82rem; color: var(--text-light); line-height: 1.65; }
+  .plan-price {
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .plan-price .price {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--navy);
+    white-space: nowrap;
+  }
+  .plan-price .period {
+    font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+    font-size: 0.75rem;
+    color: var(--text-light);
+    display: block;
+    margin-top: 2px;
+  }
+  .monitor-badge {
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+    font-size: 0.82rem;
+    line-height: 1.7;
+    padding: 14px 18px;
+    border-radius: 4px;
+  }
+  .monitor-badge strong { color: var(--gold); }
+
+  /* ===== S4 Why Me ===== */
+  #whyme { background: var(--navy); }
+  #whyme .section-title { color: var(--white); }
+  #whyme .section-title::after { background: var(--gold); }
+  .story-text {
+    color: rgba(255,255,255,0.85);
+    font-size: 0.97rem;
+    line-height: 2;
+    margin-bottom: 32px;
+  }
+  .story-text strong { color: var(--gold); }
+  .strength-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  @media (max-width: 480px) { .strength-grid { grid-template-columns: 1fr; } }
+  .strength-item {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(200,169,110,0.3);
+    border-radius: 4px;
+    padding: 16px 18px;
+  }
+  .strength-item .s-label {
+    font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 6px;
+    letter-spacing: 0.05em;
+  }
+  .strength-item p { font-size: 0.85rem; color: rgba(255,255,255,0.75); margin: 0; line-height: 1.65; }
+
+  /* ===== S5 社会的証明 ===== */
+  #proof .monitor-box {
+    background: var(--white);
+    border: 2px solid var(--gold);
+    border-radius: 6px;
+    padding: 28px 28px;
+    text-align: center;
+  }
+  .monitor-head {
+    font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 16px;
+  }
+  .monitor-features {
+    list-style: none;
+    text-align: left;
+    display: inline-block;
+    margin: 0 auto 24px;
+  }
+  .monitor-features li {
+    font-size: 0.92rem;
+    padding: 5px 0;
+    padding-left: 20px;
+    position: relative;
+    color: var(--text);
+  }
+  .monitor-features li::before {
+    content: '✓';
+    position: absolute; left: 0;
+    color: var(--gold);
+    font-weight: 700;
+  }
+  .monitor-slots {
+    font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+    font-size: 0.82rem;
+    color: var(--text-light);
+    margin-top: 12px;
+  }
+  .monitor-slots strong { color: var(--navy); }
+
+  /* ===== S6 FAQ ===== */
+  #faq .section-title { margin-bottom: 36px; }
+  .faq-list { display: flex; flex-direction: column; gap: 0; }
+  .faq-item {
+    border-bottom: 1px solid var(--border);
+  }
+  .faq-item:first-child { border-top: 1px solid var(--border); }
+  .faq-q {
+    width: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    padding: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.6;
+  }
+  .faq-q .q-mark {
+    color: var(--gold);
+    font-family: Georgia, serif;
+    font-size: 1rem;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .faq-q .q-text { flex: 1; }
+  .faq-icon {
+    width: 20px; height: 20px;
+    flex-shrink: 0;
+    position: relative;
+    margin-top: 3px;
+  }
+  .faq-icon::before, .faq-icon::after {
+    content: '';
+    position: absolute;
+    background: var(--gold);
+    border-radius: 2px;
+    transition: transform 0.25s, opacity 0.25s;
+  }
+  .faq-icon::before { width: 2px; height: 14px; top: 3px; left: 9px; }
+  .faq-icon::after  { width: 14px; height: 2px; top: 9px; left: 3px; }
+  .faq-item.open .faq-icon::before { transform: rotate(90deg); opacity: 0; }
+  .faq-a {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease;
+  }
+  .faq-a-inner {
+    padding: 0 0 20px 26px;
+    font-size: 0.92rem;
+    color: var(--text-light);
+    line-height: 1.85;
+  }
+
+  /* ===== S7 CTA ===== */
+  #cta {
+    background: var(--navy);
+    text-align: center;
+    padding: 80px 0;
+  }
+  #cta .section-title { color: var(--white); }
+  #cta .section-title::after { background: var(--gold); }
+  .cta-body {
+    color: rgba(255,255,255,0.8);
+    font-size: 1rem;
+    line-height: 2;
+    margin-bottom: 36px;
+  }
+  .cta-body strong { color: var(--gold); }
+  .cta-note {
+    margin-top: 16px;
+    font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.45);
+  }
+
+  /* ===== セクション見出し（共通） ===== */
+  .section-title {
+    font-size: clamp(1.2rem, 3.5vw, 1.6rem);
+    color: var(--navy);
+    margin-bottom: 12px;
+    position: relative;
+    padding-bottom: 16px;
+  }
+  .section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 36px; height: 2px;
+    background: var(--gold);
+  }
+  .section-title.center { text-align: center; }
+  .section-title.center::after { left: 50%; transform: translateX(-50%); }
+
+  /* ===== フッター ===== */
+  footer {
+    background: #111;
+    color: rgba(255,255,255,0.4);
+    text-align: center;
+    font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+    font-size: 0.75rem;
+    padding: 24px;
+  }
+
+  /* ===== ユーティリティ ===== */
+  .text-gold { color: var(--gold); }
+  .mt-8  { margin-top: 8px; }
+  .mt-16 { margin-top: 16px; }
+  .mt-24 { margin-top: 24px; }
+  .mt-32 { margin-top: 32px; }
+</style>
+</head>
+<body>
+
+<!-- ヘッダー -->
+<header>
+  <div class="inner">
+    <span class="site-title">KDP出版代行</span>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLScprtg_sWe4mRGdXtLU5UAE3HqwgMNMrGWa1queeQl_vE99og/viewform?usp=publish-editor" class="header-btn" target="_blank" rel="noopener">無料相談する</a>
+  </div>
+</header>
+
+<!-- S1 ヒーローセクション -->
+<section id="hero">
+  <div class="container">
+    <p class="hero-eyebrow">KDP 出版代行</p>
+    <h1 class="hero-h1">「本を出したい」と思って、<br><em>何年経ちましたか。</em></h1>
+    <p class="hero-sub">
+      素材（原稿・アイデア・メモ）を渡すだけで、<br>
+      InDesign制作・epub変換・KDP登録まで<br>
+      全工程を代行します。<br>
+      <span style="color:var(--gold-light);">相談できる人がいなかった方へ。</span>
+    </p>
+    <p class="hero-lead">
+      「自費出版社に頼んだら120万円だった」<br>そんな経験はありませんか。<br>
+      知識も、ソフトも不要です。<br>
+      あなたの「出したいもの」を形にするのが、私の仕事です。
+    </p>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLScprtg_sWe4mRGdXtLU5UAE3HqwgMNMrGWa1queeQl_vE99og/viewform?usp=publish-editor" class="btn" target="_blank" rel="noopener">まず無料で相談してみる</a>
+    <p class="hero-note">Googleフォームへ（入力2分・返信48時間以内）</p>
+  </div>
+</section>
+
+<!-- S2 アジテーション -->
+<section id="agitation">
+  <div class="container">
+    <h2 class="section-title">そのまま動かないと、<br>何が起きるか。</h2>
+    <p style="color:var(--text-light); margin-bottom:32px; font-size:0.95rem;">「いつかやろう」は、今日も明日も続きます。</p>
+
+    <div class="wall-list">
+      <div class="wall-item">
+        <p class="wall-label">❶ 価格の壁</p>
+        <p>一般的な自費出版社への相談は、見積もり事例として50万円〜150万円台になることが少なくありません。価格の壁は、自力では下がりません。</p>
+      </div>
+      <div class="wall-item">
+        <p class="wall-label">❷ 工程の壁</p>
+        <p>epub変換・KDP登録・カテゴリ設定——調べるほど用語が増え、「やっぱり難しい」と感じるサイクルを繰り返します。工程の全体像は、調べてもなかなか見えません。</p>
+      </div>
+      <div class="wall-item">
+        <p class="wall-label">❸ 時間の壁</p>
+        <p>30年のノウハウ、10年のキャリア、伝えたい経験——それは今この瞬間も、形にならないまま積み上がっています。</p>
+      </div>
+    </div>
+
+    <div class="agitation-close">
+      誰かに話したとき「すごい、本にすればいいのに」と<br>言われたことはありませんか。<br>
+      その「すごい」を、<strong>形にするタイミングは今しかありません。</strong>
+    </div>
+  </div>
+</section>
+
+<!-- S3 ソリューション -->
+<section id="solution">
+  <div class="container">
+    <h2 class="section-title">素材を渡すだけで、<br>スムーズに進めば最短3ヶ月で<br>Amazonに本が並びます。</h2>
+
+    <div class="flow-list mt-32">
+      <div class="flow-item">
+        <div class="flow-num">①</div>
+        <div class="flow-body">
+          <strong>素材を受け取る</strong>
+          <p>原稿・アイデアメモ・画像をGoogleDriveでお送りください。<br>アイデア段階でも大丈夫です。</p>
+        </div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-num">②</div>
+        <div class="flow-body">
+          <strong>編集・DTP（InDesign）</strong>
+          <p>書籍レイアウトを設計。読みやすさと見た目を同時に整えます。</p>
+        </div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-num">③</div>
+        <div class="flow-body">
+          <strong>表紙制作補助</strong>
+          <p>お客様ご用意の素材をもとに表紙レイアウトを仕上げます。</p>
+          <p class="flow-note">※デザイン素材（画像・テキスト）のご用意が必要です</p>
+        </div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-num">④</div>
+        <div class="flow-body">
+          <strong>epub変換</strong>
+          <p>KDPで配信できるデータ形式に変換。この作業で多くの方が詰まります。</p>
+        </div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-num">⑤</div>
+        <div class="flow-body">
+          <strong>KDP登録・カテゴリ設定</strong>
+          <p>登録から公開設定まで代行。発見可能性を高めるカテゴリ選びも行います。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 料金プラン -->
+    <div class="mt-48" style="margin-top:48px;">
+      <p class="plan-title">料金プラン</p>
+      <div class="plan-grid">
+        <div class="plan-card">
+          <div>
+            <p class="plan-name">ミニマム</p>
+            <p class="plan-desc">DTP＋KDP登録のみ<br>納期 10日</p>
+          </div>
+          <div class="plan-price">
+            <span class="price">15,000円〜</span>
+          </div>
+        </div>
+        <div class="plan-card featured">
+          <div>
+            <p class="plan-name">スタンダード ★</p>
+            <p class="plan-desc">全工程代行。表紙・epub・登録込み<br>納期 14〜21日</p>
+          </div>
+          <div class="plan-price">
+            <span class="price">35,000〜<br>50,000円</span>
+          </div>
+        </div>
+        <div class="plan-card">
+          <div>
+            <p class="plan-name">フルサポート</p>
+            <p class="plan-desc">全工程＋ISBN取得＋カテゴリ戦略<br>＋著者ブランディング<br>納期 要相談</p>
+          </div>
+          <div class="plan-price">
+            <span class="price">60,000〜<br>80,000円</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="monitor-badge mt-16">
+        <strong>今だけ：モニター価格でお受けしています</strong><br>
+        最初の数件は通常価格より下げてご提供しています。<br>納品後に品質をご確認いただき、追加のご依頼やご紹介を検討いただければ幸いです。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- S4 Why Me -->
+<section id="whyme">
+  <div class="container">
+    <h2 class="section-title">なぜ私がこれを<br>提供できるのか。</h2>
+
+    <div class="story-text mt-32">
+      <p>私はもともと、大手出版社の編集者でした。</p>
+      <p>仏教・芸術（学術系）・絵本——さまざまなジャンルの本を、著者と一緒に作り続けてきました。その仕事の中で何度も見てきたのは、「お金を払ってでも自分の考えを世に出したい」という人たちが、価格の壁に弾かれていく現実でした。</p>
+      <p>出版社を離れ、富山にUターンした後も、InDesignでの書籍制作・DTP・ISBN取得・流通知識——その実務は使い続けてきました。</p>
+      <p>KDPを知ったとき、確信しました。<br><strong>著者になるハードルは、私が代わりに越えられる。</strong></p>
+      <p>自費出版社が100万円以上取る工程を、専門知識を持った個人として、手の届く価格で提供する。それが、このサービスを始めた理由です。</p>
+    </div>
+
+    <div class="strength-grid">
+      <div class="strength-item">
+        <p class="s-label">元大手出版社編集者</p>
+        <p>書籍の構造・読者に届く編集の視点を持つ</p>
+      </div>
+      <div class="strength-item">
+        <p class="s-label">InDesign書籍制作レベル</p>
+        <p>DTP実務歴あり。80ページ規模の制作実績</p>
+      </div>
+      <div class="strength-item">
+        <p class="s-label">ISBN取得・流通知識</p>
+        <p>書店流通の仕組みを知った上でKDP設定ができる</p>
+      </div>
+      <div class="strength-item">
+        <p class="s-label">富山在住・地元密着</p>
+        <p>北陸・地方在住の著者と対面・電話で相談できる</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- S5 社会的証明 -->
+<section id="proof">
+  <div class="container">
+    <h2 class="section-title center">現在、モニター価格で<br>お受けしています</h2>
+
+    <div class="monitor-box mt-32">
+      <p class="monitor-head">最初の数件限定・モニター特典</p>
+      <ul class="monitor-features">
+        <li>通常価格より割引した特別価格でご提供</li>
+        <li>制作過程のコミュニケーションを丁寧に行います</li>
+        <li>完成後、ご感想をいただける方を優先してご案内</li>
+      </ul>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLScprtg_sWe4mRGdXtLU5UAE3HqwgMNMrGWa1queeQl_vE99og/viewform?usp=publish-editor" class="btn btn-full" target="_blank" rel="noopener">モニターとして相談してみる</a>
+      <p class="monitor-slots mt-16">先着受付中。<strong>満枠になり次第、通常価格に移行します。</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- S6 FAQ -->
+<section id="faq">
+  <div class="container">
+    <h2 class="section-title">よくあるご質問</h2>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span class="q-mark">Q</span>
+          <span class="q-text">原稿がまだ完成していないのですが、相談できますか？</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq-a" role="region">
+          <div class="faq-a-inner">
+            はい、できます。フルサポートプランでは、素材（話したいこと・メモ・箇条書き）の段階からご相談を受け付けています。「何を書けばいいかわからない」という方もお気軽にどうぞ。
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span class="q-mark">Q</span>
+          <span class="q-text">クオリティはどのくらいですか？実績を見られますか？</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq-a" role="region">
+          <div class="faq-a-inner">
+            完成品のサンプルPDFをご用意しています。お問い合わせ時に「サンプルを見たい」とお書きください。百の説明より実際の納品物をご覧いただくのが一番早いと思っています。
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span class="q-mark">Q</span>
+          <span class="q-text">KDPで出しても読まれないのでは？</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq-a" role="region">
+          <div class="faq-a-inner">
+            正直にお伝えします。出版しただけで自動的に読まれるわけではありません。ただ、発見可能性を高める可能性があるカテゴリ設定・タイトル設計のアドバイスは行っています。「著者になる」という最初の一歩をサポートするのがこのサービスの役割です。
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span class="q-mark">Q</span>
+          <span class="q-text">修正は何回できますか？</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq-a" role="region">
+          <div class="faq-a-inner">
+            プランによって異なります。ご依頼前に修正回数のルールを明示した簡易の合意書をお渡しします。後からのトラブルがないよう、事前にすり合わせしてから進める設計にしています。
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span class="q-mark">Q</span>
+          <span class="q-text">顔が見えない相手に依頼するのは不安です。</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq-a" role="region">
+          <div class="faq-a-inner">
+            おっしゃる通りです。だからこそ、まず無料で30分の相談をお受けしています。話してみて「この人に頼める」と感じてからご依頼ください。断っていただいても構いません。相談だけで終わっても、お力になれることがあればお話しします。
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span class="q-mark">Q</span>
+          <span class="q-text">富山以外に住んでいますが依頼できますか？</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq-a" role="region">
+          <div class="faq-a-inner">
+            はい、全国対応しています。素材の受け渡しはGoogleDrive、やりとりはメール・Zoomで完結します。地方在住・海外在住の方からもご相談いただけます。
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- S7 CTA -->
+<section id="cta">
+  <div class="container" style="text-align:center;">
+    <h2 class="section-title center">まず、話してみてください。</h2>
+    <div class="cta-body mt-24">
+      5分でも構いません。<br>
+      どんな本を出したいか、それだけ聞かせてください。<br><br>
+      提案も、見積もりも、その後でいいです。<br>
+      <strong>「相談したら買わないといけない」は、ありません。</strong>
+    </div>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLScprtg_sWe4mRGdXtLU5UAE3HqwgMNMrGWa1queeQl_vE99og/viewform?usp=publish-editor" class="btn" target="_blank" rel="noopener" style="font-size:1.05rem; padding:18px 40px;">無料相談フォームに進む（2分で入力完了）</a>
+    <p class="cta-note mt-16">ご相談は無料です。断っていただいても構いません。<br>まず話してみることが、最初の一歩です。</p>
+  </div>
+</section>
+
+<!-- フッター -->
+<footer>
+  <p>© 2026 KDP出版代行</p>
+</footer>
+
+<!-- 固定CTAバー -->
+<div class="fixed-cta" id="fixedCta">
+  <p>素材を渡すだけで本が出る</p>
+  <a href="https://docs.google.com/forms/d/e/1FAIpQLScprtg_sWe4mRGdXtLU5UAE3HqwgMNMrGWa1queeQl_vE99og/viewform?usp=publish-editor" class="btn" target="_blank" rel="noopener">無料で相談する</a>
+</div>
+
+<script>
+  // FAQアコーディオン
+  document.querySelectorAll('.faq-q').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var item = this.closest('.faq-item');
+      var answer = item.querySelector('.faq-a');
+      var isOpen = item.classList.contains('open');
+
+      // 他を全部閉じる
+      document.querySelectorAll('.faq-item.open').forEach(function(openItem) {
+        openItem.classList.remove('open');
+        openItem.querySelector('.faq-a').style.maxHeight = '0';
+        openItem.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+      });
+
+      // クリックしたものをトグル
+      if (!isOpen) {
+        item.classList.add('open');
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+        this.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  // 固定CTAバー：ヒーロー内のCTAが見えている間は非表示
+  (function() {
+    var heroCta = document.querySelector('#hero .btn');
+    var fixedCta = document.getElementById('fixedCta');
+    if (!heroCta || !fixedCta) return;
+
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        fixedCta.style.transform = entry.isIntersecting ? 'translateY(100%)' : 'translateY(0)';
+        fixedCta.style.transition = 'transform 0.3s ease';
+      });
+    }, { threshold: 0.5 });
+
+    observer.observe(heroCta);
+  })();
+</script>
+</body>
+</html>
